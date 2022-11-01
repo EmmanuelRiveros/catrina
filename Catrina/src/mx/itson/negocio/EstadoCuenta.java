@@ -21,6 +21,7 @@ public class EstadoCuenta {
     private Cliente cliente;
     private List<Movimiento> movimientos;
     
+    // Deserializa el codigo haciendo uso de la clase Gson
     public EstadoCuenta deserializar(String json){
         EstadoCuenta edoCuenta = new EstadoCuenta();
         try {

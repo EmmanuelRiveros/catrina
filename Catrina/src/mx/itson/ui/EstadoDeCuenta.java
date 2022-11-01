@@ -471,7 +471,7 @@ public class EstadoDeCuenta extends javax.swing.JFrame {
         try {
             JFileChooser fileChooser = new JFileChooser();
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-            
+                       
             if(fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File archivo = fileChooser.getSelectedFile();
                 
@@ -508,10 +508,12 @@ public class EstadoDeCuenta extends javax.swing.JFrame {
                 lblRetiros.setText("" + (operacion.sumarValoresFlujo(edoCuenta.getMovimientos(), 2)));
                 lblSaldoFinal.setText("" + (operacion.calcularSaldoFinal(edoCuenta.getMovimientos(), saldoInicialMes)));
                 
+                // Mostrar mensaje de error en caso de encontrar un valor vacío en la clase movimiento
                 if (edoCuenta.getMovimientos().isEmpty()){
                     infoBox("El estado de cuenta de este mes esta vacío", "Error en el estado de cuenta");
                 }
                 
+                // Ingresar todos movimientos a la tabla "modelo1"
                 for (Movimiento i : edoCuenta.getMovimientos()){
                     if (i.getTipo() == 1){
                         modelo1.addRow(new Object[] { i.getFecha(), i.getDescripcion(), i.getCantidad(), "",  ""});
@@ -520,6 +522,7 @@ public class EstadoDeCuenta extends javax.swing.JFrame {
                     }
                 }
                 
+                // Calcular el subtotal e ingresarlo en la tabla
                 float subtotal = saldoInicialMes;
                 for (int i = 0; i<edoCuenta.getMovimientos().size(); i++){
                     if (edoCuenta.getMovimientos().get(i).getTipo() == 1){
@@ -539,6 +542,7 @@ public class EstadoDeCuenta extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    // Metodo para invocar un mensaje de error
     private static void infoBox(String infoMsj, String titulo)
     {
         JOptionPane.showMessageDialog(null, infoMsj, titulo, JOptionPane.INFORMATION_MESSAGE);
